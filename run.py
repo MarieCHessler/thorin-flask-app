@@ -38,6 +38,15 @@ def contact():
     return render_template("contact.html")
 
 
+@app.route("/careers")
+def careers():
+    """
+    Returns contact.html template
+    Decorator - starts with @, used to wrap function
+    """
+    return render_template("careers.html")
+
+
 if __name__ == "__main__":  # __main__ is the default module in Python
     app.run(
         host=os.environ.get("IP", "0.0.0.0"),
