@@ -5,12 +5,15 @@ Import Flask class from Flask
 """
 import os
 import json
-from flask import Flask, render_template  # Import Flask class
+from flask import Flask, render_template, request, flash  # Import Flask class
+if os.path.exists("env.py"):
+    import env
 
 # Store an instance of the class in the variable app
 # Set argument __name__, for Flask to know where to look
 # for templates and static files
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
 @app.route("/")
@@ -49,11 +52,14 @@ def about_member(member_name):
     # return "<h1>" + member["name"] + "</h1>"
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
     """
     Return contact.html template
     """
+    if request.method == "POST":
+        flash("Thanks {}, we have received your message!".format(
+            request.form.get("name")))
     return render_template("contact.html", page_title="Contact")
 
 
