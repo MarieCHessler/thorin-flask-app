@@ -1,8 +1,10 @@
 """
 Import os
+Import JSon
 Import Flask class from Flask
 """
 import os
+import json
 from flask import Flask, render_template  # Import Flask class
 
 # Store an instance of the class in the variable app
@@ -26,7 +28,10 @@ def about():
     Returns about.html template
     Decorator - starts with @, used to wrap function
     """
-    return render_template("about.html", page_title="About")
+    data = []
+    with open("data/company.json", "r") as json_data:
+        data = json.load(json_data)
+    return render_template("about.html", page_title="About", company=data)
 
 
 @app.route("/contact")
